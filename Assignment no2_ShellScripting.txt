@@ -1,0 +1,280 @@
+Name:Unnati Katore
+Batch 5
+Assignmnet No 2
+
+Working with a Vi Editor:
+
+
+1: Create a file using vi. Enter the following text:
+
+A network is a group of computers that can communicate with each other, share
+
+resources, and access remote hosts or other networks. Netware is a computer network
+
+operating system designed to connect, manage, and maintain a network and its
+
+services. Some of the network services are Netware Directory Services (NDS), file
+
+system, printing and security.
+
+a. Change the word “Netware” in the second line to “Novell Netware”.
+
+Output: [admin@hostname01 ~]$ vi network_info.txt
+[admin@hostname01 ~]$ sed -i '2s/Netware/Novell Netware/' network_info.txt
+[admin@hostname01 ~]$ cat network_info.txt
+A network is a group of computers that can communicate with each other, share
+resources, and access remote hosts or other networks. Novell Netware is a computer network
+operating system designed to connect, manage, and maintain a network and its
+services. Some of the network services are Netware Directory Services (NDS), file
+system, printing and security.
+
+
+
+b. Insert the text “(such as hard disks and printers)” after “share resources” in the
+
+first line.
+Output: [admin@hostname01 ~]$ sed -i '1s/share resources/share resources (such as hard disks and printers)/g' network_info.txt
+[admin@hostname01 ~]$ cat network_info.txt
+A network is a group of computers that can communicate with each other, share
+resources,(such as hard disks and printers) and access remote hosts or other networks. Netware is a computer network
+operating system designed to connect, manage, and maintain a network and its
+services. Some of the network services are Netware Directory Services (NDS), file
+system, printing and security.
+
+c. Append the following text to the file:
+
+“Managing NDS is a fundamental administrator role because NDS provides a single
+
+point for accessing and managing most network resources.”
+Output: [admin@hostname01 ~]$ echo "Managing NDS is a fundamental administrator role because NDS provides a single point for accessing and managing most network resources." >> network_info.txt
+[admin@hostname01 ~]$ cat network_info.txt
+A network is a group of computers that can communicate with each other, share
+resources, and access remote hosts or other networks. Netware is a computer network
+operating system designed to connect, manage, and maintain a network and its
+services. Some of the network services are Netware Directory Services (NDS), file
+system, printing and security.
+Managing NDS is a fundamental administrator role because NDS provides a single point for accessing and managing most network resources.
+
+Working shell
+
+
+1. Type some text on the shell separated by space
+
+1: Move cursor one word back
+Ans:ctrl+left arrow
+
+2: Move cursor one word forward
+Ans:ctrl+right arrow
+
+3: Move cursor to the first character
+Ans:ctrl+a
+
+4: Move cursor to the end
+Ans:ctrl+e
+
+5: Delete test from second word to last character
+Ans:ctrl+k
+
+6: Delete the current line
+Ans: ctrl+u
+
+2: In lab 4 we have created a file errorlog.txt. Display it using cat command using
+
+command completion.
+Output: [admin@hostname01 ~]$ cat errorlog.txt
+
+
+3: Display history of command used so far.
+Output:[admin@hostname01 ~]$ history
+
+
+4: Search ls command in history file
+Output:[admin@hostname01 ~]$ history | grep ls
+   26  echo $(ls-l)
+   28  man ls
+   35  ls
+   48  ls -d /etc/??
+   51  ls
+   58  echo ls -l
+   73  ls
+   81  ls
+   82  history | grep ls
+
+
+5: Repeat the last command rd
+Output:[admin@hostname01 ~]$ !!
+
+
+6: Execute 3 command from history file.
+Output:[admin@hostname01 ~]$ !3
+
+
+7: What are the different shells available.
+Output:[admin@hostname01 ~]$ echo $SHELL
+/bin/bash
+[admin@hostname01 ~]$ cat /etc/shells
+/bin/sh
+/bin/bash
+/usr/bin/sh
+/usr/bin/bash
+
+
+Understanding access permissions
+
+
+7.1: Create an empty file “demofile” and perform following instruction
+Output: [admin@hostname01 ~]$ touch demofile
+
+
+1. Revoke read permission from owner and use cat command.
+Output:admin@hostname01 ~]$ chmod u-r demofile
+[admin@hostname01 ~]$ cat demofile
+cat: demofile: Permission denied
+
+2. Revoke write permission from owner and open using vi
+editor and add some contain in it.
+Output:[admin@hostname01 ~]$ chmod u-w demofile
+[admin@hostname01 ~]$ vi demofile
+
+3. Add read and write permission to owner.
+Output:[admin@hostname01 ~]$ chmod u+rw demofile
+
+
+4. Revoke write and execute from other and group
+Output:[admin@hostname01 ~]$ chmod go-wx demofile
+
+
+5. Add write permission to group only
+Output:[admin@hostname01 ~]$chmod g+w demofile
+
+
+6. Assign read permission to all
+Output: [admin@hostname01 ~]$ chmod a+r demofile
+
+
+7. Revoke read permission from others
+Output:[admin@hostname01 ~]$ chmod o-r demofile
+
+
+8. Give the execute permission for the user for a file chap1
+Output:[admin@hostname01 ~]$ chmod u+x chap1
+
+
+9. Give the execute permission for user, group and others for a file add.c
+Output:[admin@hostname01 ~]$ chmod a+x add.c
+
+
+10. Remove the execute permission from user, give read permission to
+
+group and others for a file aa.c
+Output:[admin@hostname01 ~]$ chmod u-x,go+r aa.c
+
+
+11. Give execute permission for users for a.c, kk.c, nato and myfile using
+
+single command
+Output:[admin@hostname01 ~]$ chmod u+x a.c kk.c nato myfile
+
+
+7.2: Create an directory “demo” and copy /etc/passwd file in it
+Output: [admin@hostname01 ~]$ mkdir demo
+cp /etc/passwd demo/
+
+
+1. Display contents of demo
+Output: ls demo
+
+
+2. Revoke read permission from demo directory and use ls
+
+command on it
+Output:[admin@hostname01 ~]$ chmod u-r demo
+[admin@hostname01 ~]$ ls demo
+ls: cannot open directory 'demo': Permission denied
+
+
+3. Revoke write permission from demo directory and try to copy
+
+/etc/profile file in it
+Output:[admin@hostname01 ~]$ cp /etc/profile demo/
+cp: cannot create regular file 'demo/profile': Permission denied
+
+
+4. Delete passwd file from demo directory
+Output: [admin@hostname01 ~]$ rm demo/passwd
+
+5. Revoke execute permission from demo directory and try cd
+
+command on demo.
+Output: [admin@hostname01 ~]$ chmod u-x demo
+[admin@hostname01 ~]$ cd demo
+bash: cd: demo: Permission denied
+ 
+Using Process-Related Commands
+
+
+1. Find out the PID of the processes that are activated by you
+Output: [admin@hostname01 ~]$ ps -u $(whoami)
+
+2. Find out the information about all the processes that are currently active
+Output: [admin@hostname01 ~]$ ps aux
+
+3. Start a different process in the background. Find out the status of the background
+Output: [admin@hostname01 ~]$ sleep 60 &
+[1] 51104
+
+process using the PID of the same.
+
+4. Run a job in background
+Output: [admin@hostname01 ~]$ sleep 120 &
+[2] 51110
+[1]   Done                    sleep 60
+
+
+5. Bring a last background job in fore ground
+Output:[admin@hostname01 ~]$ fg
+sleep 120
+
+
+6. Run 3 jobs in background and bring first job in foreground
+Output: [admin@hostname01 ~]$ sleep 30 &
+sleep 60 &
+sleep 90 &
+[1] 51153
+[2] 51154
+[3] 51155
+
+
+7. Stop current job
+ANs:ctrl+z
+
+8. Start stopped job
+Ans: bg
+
+9. Run a job
+ANs:[admin@hostname01 ~]$ sleep 60
+
+10. Kill last job
+ANs:[admin@hostname01 ~]$ kill %1
+
+
+11. Kill your shell using process id
+Output:[admin@hostname01 ~]$ $$
+       [admin@hostname01 ~]$ exit
+
+
+12. Execute a ls command by setting priority as -10 using nice command
+Output: [admin@hostname01 ~]$ nice -n -10 ls
+nice: cannot set niceness: Permission denied
+ cal_grade.sh	      Desktop	     file_size_info.sh	 health-club.sh		    Music	       Pictures     star_pattern.sh
+ check_work_days.sh   Documents      file.txt		 health_club.sh		    network_info.txt   porpose.sh   student
+'~C_prog'	      Downloads      friends		 log1			    new		       Public	    Templates
+ demo		      er	     greet_person.sh	 lsdoc			    newfriends	       purpose.sh   users
+ demofile	      errorlog.txt   greet_user.sh	 modify_student_record.sh   output	       sff	    Videos
+ 
+
+
+13. Display a date on every hour using cron tab
+Output: [admin@hostname01 ~]$ crontab -e
+check date using [admin@hostname01 ~]$ /var/log/cron
+
