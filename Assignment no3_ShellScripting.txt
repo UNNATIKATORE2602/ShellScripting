@@ -1,0 +1,568 @@
+Name:Unnati Katore
+Batch 5
+Assignmnet No 2
+
+UNIX File System & Permissions
+
+1: Give the execute permission for the user for a file chap1.
+Output: [admin@hostname01 Desktop]$ chmod u+x chap1
+
+2: Give execute permission for user, group and others for a file add.c
+Output: [admin@hostname01 Desktop]$ chmod a+x add.c
+
+
+3: Remove the execute permission from user, give read permission to group and others for a file aa.c
+Output: [admin@hostname01 Desktop]$ chmod u-x,go+r aa.c
+
+
+4: Give execute permission for users for a.c, kk.c, nato and myfile using single command.
+Output: [admin@hostname01 Desktop]$ chmod u+x a.c kk.c nato myfile
+
+
+5: Change the directory to root directory. Check the system directories, like bin, etc, usr etc.
+Output: [admin@hostname01 Desktop]$ cd /
+[admin@hostname01 Desktop]$ ls
+
+
+Using Pipes and Filters
+
+1: Redirect the content of the help document ls, into a file called as lsdoc.
+Output: [root@hostname01 ~]# man ls >lsdoc
+
+
+2: Display the content of the lsdoc page wise.
+Output: [root@hostname01 ~]# less lsdoc
+
+
+3: Display only the first 4 lines of the lsdoc file.
+Output:[root@hostname01 ~]# less lsdoc
+[root@hostname01 ~]# head -n 4 lsdoc
+LS(1)                            User Commands                           LS(1)
+
+NAME
+       ls - list directory contents
+
+
+4: Display only the last 7 lines of the file lsdoc.
+Output:[root@hostname01 ~]# tail -n 7 lsdoc
+       There is NO WARRANTY, to the extent permitted by law.
+
+SEE ALSO
+       Full documentation <https://www.gnu.org/software/coreutils/ls>
+       or available locally via: info '(coreutils) ls invocation'
+
+GNU coreutils 8.32               December 2024                           LS(1)
+[root@hostname01 ~]# 
+
+
+5: Remove the file lsdoc.
+Output:[root@hostname01 ~]# rm lsdoc
+rm: remove regular file 'lsdoc'? yes
+
+
+6: There will be B’day celebration from the friends file, find how many B’day parties
+
+will be held. If two of the friends have the B’date on the same day, then we will be
+
+having one party on that day.
+
+Output: [root@hostname01 ~]# echo "John: 1990-01-15" > friends
+echo "Alice: 1991-02-20" >> friends
+echo "Bob: 1990-01-15" >> friends
+echo "Charlie: 1992-03-10" >> friends
+echo "David: 1991-02-20" >> friends
+[root@hostname01 ~]# cat friends
+John: 1990-01-15
+Alice: 1991-02-20
+Bob: 1990-01-15
+Charlie: 1992-03-10
+David: 1991-02-20
+[root@hostname01 ~]# cut -d ':' -f 2 friends | sort | uniq | wc -l
+3
+
+
+7: Display the lines starting with Ma, in the file friends.
+Output:[root@hostname01 ~]# echo "Mary: 1990-05-20" >> friends
+[root@hostname01 ~]# grep "^Ma" friends
+Mary: 1990-05-20
+
+
+8: Display the lines starting with Ma, ending with i or ending with id, in the file friends.
+Output: [root@hostname01 ~]# grep "^Ma.*i(d)?$" friends
+
+9: Print all the files and the directory files from the current directory across all the sub directories, along with its path
+Output: [root@hostname01 ~]# find .
+
+10: Print only the Directory files.
+Ans: [root@hostname01 ~]#find . -type d
+
+11: Display the files starting with chap, along with its path.
+Ans: [root@hostname01 ~]# find . -type f -name "chap*"
+
+12: Sort the file friends in ascending order of names.
+Ans:[root@hostname01 ~]# sort friends
+Alice: 1991-02-20
+Bob: 1990-01-15
+Charlie: 1992-03-10
+David: 1991-02-20
+John: 1990-01-15
+ Madi: 2000-02-15
+Mark: 1993-12-25
+Mary: 1990-05-20
+Matt: 1995-05-17
+
+
+13: Display the contents of the file friends in uppercase letters.
+Ans: [root@hostname01 ~]# cat friends | tr 'a-z' 'A-Z'
+JOHN: 1990-01-15
+ALICE: 1991-02-20
+BOB: 1990-01-15
+CHARLIE: 1992-03-10
+DAVID: 1991-02-20
+MARY: 1990-05-20
+MARK: 1993-12-25
+MATT: 1995-05-17
+ MADI: 2000-02-15
+
+14: Store the contents of your home directory in a file called dir.
+Ans: [root@hostname01 ~]# ls ~ > dir
+
+15: From the above file dir, display the file permissions and the name of the file only.
+Ans:[root@hostname01 ~]# awk '{print $1, $9}' dir
+anaconda-ks.cfg 
+array.sh 
+Desktop 
+dir 
+Documents 
+Downloads 
+friends 
+funct.sh 
+greater.sh 
+Music 
+Pictures 
+Public 
+purpose.sh 
+sorted_friends 
+Templates 
+use_command.sh 
+Videos 
+
+16: From the same dir file, store only the file names in a file called files.
+Ans:[root@hostname01 ~]# awk '{print $9}' dir > files
+
+17: From the same dir file, store only the permissions of files in a file called perms.
+Ans: [root@hostname01 ~]# awk '{print $1}' dir > perms
+
+18: From the same dir file, store only the file sizes in a file called sizes.
+Ans: [root@hostname01 ~]# awk '{print $5}' dir > sizes
+
+19: Display the file names, sizes and permissions from your directory in that order.
+Ans:[root@hostname01 ~]# awk '{print $9, $5, $1}' dir
+  anaconda-ks.cfg
+  array.sh
+  Desktop
+  dir
+  Documents
+  Downloads
+  friends
+  funct.sh
+  greater.sh
+  Music
+  Pictures
+  Public
+  purpose.sh
+  sorted_friends
+  Templates
+  use_command.sh
+  Videos
+
+
+20: Display the number of users working on the system.
+Ans: [root@hostname01 ~]# who | wc -l
+2
+
+21: Find out the smallest file in your directory.
+Ans:[root@hostname01 ~]# ls -l | sort -k5,5n | head -n 1
+total 48
+
+22: Display the total number of lines present in the file friends.
+Ans: [root@hostname01 ~]# ls -l | sort -k5,5n | head -n 1
+total 48
+
+23: Create the following fixed record format files (with “|” delimiter between fields) with the structure given below, and populate them with relevant data use these files to solve following questions
+
+emp.lst: Empid(4),Name(18),Designation(9),Dept(10),Date of Birth(8),Salary(5)
+
+dept.lst: Dept.Code (2), Name (10), Head of Dept’s id(4)
+
+desig.lst: Designation Abbr.(2), Name (9)
+
+1. Find the record lengths of each file.
+Ans: [root@hostname01 ~]# awk '{print length($0)}' emp.lst
+60
+61
+61
+60
+
+[root@hostname01 ~]# awk '{print length($0)}' dept.lst
+23
+24
+23
+24
+
+[root@hostname01 ~]# awk '{print length($0)}' dept.lst
+23
+24
+23
+24
+
+
+2. Display only the date of birth and salary of the last employee record.
+Ans: [root@hostname01 ~]# awk -F'|' 'END {print "DOB: " $5 ", Salary: " $6}' emp.lst 
+DOB: 1985-07-19, Salary: 30000
+
+
+3. Extract only employee names and designations. (Use column specifications).
+
+Save output as cfile1.
+Ans:[root@hostname01 ~]# awk -F'|' '{print $2, $3}' emp.lst > cfile1
+[root@hostname01 ~]# cat cfile1
+John Doe         Manager   
+Alice Smith       Engineer  
+Bob Johnson       Technician
+Charlie Brown     Clerk  
+
+4. Extract Emp.id, dept, dob and salary. (Use field specifications). Save output as
+
+cfile2.
+Ans: [root@hostname01 ~]# awk -F'|' '{print $1, $4, $5, $6}' emp.lst > cfile2
+[root@hostname01 ~]# cat cfile2
+1001 HR         1990-01-15 50000
+1002 IT         1988-05-22 55000
+1003 Sales      1992-03-12 35000
+1004 Admin      1985-07-19 30000
+
+
+5. Fix the files cfile1 and cfile2 laterally, along with the delimiter.
+Ans: [root@hostname01 ~]# paste -d'|' cfile1 cfile2 > fixed_file
+[root@hostname01 ~]# cat fixed_file
+John Doe         Manager   |1001 HR         1990-01-15 50000
+Alice Smith       Engineer  |1002 IT         1988-05-22 55000
+Bob Johnson       Technician|1003 Sales      1992-03-12 35000
+Charlie Brown     Clerk    |1004 Admin      1985-07-19 30000
+
+
+6. Sort the emp.lst file in reverse order of Emp. Names.
+Ans: [root@hostname01 ~]# sort -t'|' -k2,2r emp.lst
+1001|John Doe        |Manager   |HR        |1990-01-15|50000
+1004|Charlie Brown    |Clerk    |Admin     |1985-07-19|30000
+1003|Bob Johnson      |Technician|Sales     |1992-03-12|35000
+1002|Alice Smith      |Engineer  |IT        |1988-05-22|55000
+
+
+7. Sort the emp.lst file on the salary field, and store the result in file srtf.
+Ans: [root@hostname01 ~]# sort -t'|' -k2,2r emp.lst
+1001|John Doe        |Manager   |HR        |1990-01-15|50000
+1004|Charlie Brown    |Clerk    |Admin     |1985-07-19|30000
+1003|Bob Johnson      |Technician|Sales     |1992-03-12|35000
+1002|Alice Smith      |Engineer  |IT        |1988-05-22|55000
+
+8. Sort the emp.ls t file on designation followed by name.
+Ans: [root@hostname01 ~]# sort -t'|' -k3,3 -k2,2 emp.lst
+1004|Charlie Brown    |Clerk    |Admin     |1985-07-19|30000
+1002|Alice Smith      |Engineer  |IT        |1988-05-22|55000
+1001|John Doe        |Manager   |HR        |1990-01-15|50000
+1003|Bob Johnson      |Technician|Sales     |1992-03-12|35000
+
+
+9. Sort the emp.lst file on the year of birth.
+Ans: [root@hostname01 ~]# sort -t'|' -k5,5 emp.lst
+1004|Charlie Brown    |Clerk    |Admin     |1985-07-19|30000
+1002|Alice Smith      |Engineer  |IT        |1988-05-22|55000
+1001|John Doe        |Manager   |HR        |1990-01-15|50000
+1003|Bob Johnson      |Technician|Sales     |1992-03-12|35000
+[root@hostname01 ~]# 
+
+
+10. Find out the various designations in the employee file. Eliminate duplicate
+
+listing of designations.
+Ans: [root@hostname01 ~]# awk -F'|' '{print $3}' emp.lst | sort | uniq
+Clerk    
+Engineer  
+Manager   
+Technician
+
+
+11. Find the non-repeated designation in the employee file.
+Ans: [root@hostname01 ~]# awk -F'|' '{print $3}' emp.lst | sort | uniq -u
+Clerk    
+Engineer  
+Manager   
+Technician
+
+
+12. Find the number of employees with various designations in the employee file.
+Ans: [root@hostname01 ~]# awk -F'|' '{print $3}' emp.lst | sort | uniq -c
+      1 Clerk    
+      1 Engineer  
+      1 Manager   
+      1 Technician
+
+
+13. Create a listing of the years in which employees were born in, along with
+
+number of employees born in that year.
+Ans: [root@hostname01 ~]# awk -F'|' '{print substr($5, 1, 4)}' emp.lst | sort | uniq -c
+      1 1985
+      1 1988
+      1 1990
+      1 1992
+
+
+14. Use nl command to create a code table for designations to include designation
+
+code (Start with dept. code 100, and subsequently 105, 110 …).
+Ans: [root@hostname01 ~]# nl -w1 -s'. ' desig.lst | awk '{print $1+99, $2, $3}'
+100 MN|Manager 
+101 EN|Engineer 
+102 TC|Technician 
+103 CL|Clerk 
+
+
+24: PCS has its offices at Pune, TTC and Mumbai. The employees’ data is stored
+
+separately for each office. Create appropriate files (with same record structure as
+
+in previous assignment) and populate with relevant data.
+
+1. List details about an employee ‘Manu Sharma’ in the Mumbai office.
+Ans: [root@hostname01 ~]# grep "Manu Sharma" mumbai_emp.lst
+3002|Manu Sharma     |Engineer  |AI        |1981-06-19|67000
+
+
+2. List only the Emp.Id. And Dept. of Manu Sharma.
+Ans: [root@hostname01 ~]# grep "Manu Sharma" mumbai_emp.lst | awk -F'|' '{print $1, $4}'
+3002 AI 
+
+3. List details of all managers in all offices. (O/P should not contain file names.).
+Ans: [root@hostname01 ~]# grep "Manager" pune_emp.lst ttc_emp.lst mumbai_emp.lst
+pune_emp.lst:1001|John Doe        |Manager   |HR        |1990-01-15|50000
+ttc_emp.lst:2001|Suresh Kumar     |Manager   |HR        |1987-11-09|52000
+mumbai_emp.lst:3001|Amit Desai       |Manager   |HR        |1985-02-25|53000
+
+4. Find the number of S.E. in each office.
+Ans: [root@hostname01 ~]# echo "Pune Office:"
+grep -c "S.E." pune_emp.lst
+echo "TTC Office:"
+grep -c "S.E." ttc_emp.lst
+echo "Mumbai Office:"
+grep -c "S.E." mumbai_emp.lst
+
+Pune Office:
+0
+TTC Office:
+0
+Mumbai Office:
+0
+
+
+5. List only the Line Numbers and Employee names of employees in ‘H/W’ in
+
+Pune file.
+Ans: [root@hostname01 ~]# grep -n "H/W" pune_emp.lst | awk -F'|' '{print $1, $2}'
+5:1005 Manu Sharma   
+
+6. Obtain a listing of all employees other than those in ‘HR’ in the Mumbai file
+
+and save contents in a file ‘nonhr’.
+Ans: [root@hostname01 ~]# grep -v "HR" mumbai_emp.lst > nonhr
+[root@hostname01 ~]# cat nonhr
+3002|Priya Sharma     |Engineer  |IT        |1991-07-14|57000
+3003|Sameer Khan      |Technician|Sales     |1994-10-09|37000
+3004|Geeta Rao        |Clerk     |Admin     |1988-12-04|32000
+3002|Manu Sharma     |Engineer  |AI        |1981-06-19|67000
+
+7. Find the name and designation of the youngest person who is not a manager.
+Ans:
+ [root@hostname01 ~]# awk -F'|' '$3 != "Manager" {print $5, $2, $3}' pune_emp.lst ttc_emp.lst mumbai_emp.lst | sort -t'-' -k1,1nr | head -n 1
+1994-10-09 Sameer Khan       Technician
+
+8. Display only the filename(s) in which details of employee by the name
+
+‘Seema Sharma’ can be found.
+Ans: [root@hostname01 ~]# echo "1006|Seema Sharma     |Engineer  |AI        |1983-05-18|87000" >> pune_emp.lst
+[root@hostname01 ~]# grep -l "Seema Sharma" pune_emp.lst ttc_emp.lst mumbai_emp.lst
+pune_emp.lst
+
+
+9. Locate the lines containing saxena and saksena in the Mumbai office.
+Ans:[root@hostname01 ~]# grep -i "saxena\|saksena" mumbai_emp.lst
+3006|Seema saxena     |Engineer  |DS        |1983-05-18|87000
+3006|Reema saksena     |Engineer  |ML        |1988-09-14|77000
+
+
+10. Find the number of managers who earn between 50000 and 99999 in the Pune
+
+office.
+Ans:[root@hostname01 ~]# awk -F'|' '$3 == "Manager" && $6 >= 50000 && $6 <= 99999' pune_emp.lst | wc -l
+0
+
+
+11. List names of employees whose id is in the range 2000 – 2999: in Pune
+
+Office; in all offices.
+Ans:[root@hostname01 ~]# echo "Pune Office:"
+awk -F'|' '$1 >= 2000 && $1 <= 2999 {print $2}' pune_emp.lst
+
+echo "All Offices:"
+awk -F'|' '$1 >= 2000 && $1 <= 2999 {print $2}' pune_emp.lst ttc_emp.lst mumbai_emp.lst
+Pune Office:
+All Offices:
+Suresh Kumar     
+Nina Verma       
+Vikram Shah      
+Rekha Reddy   
+
+12. Locate people having same month of birth as current month in Pune office.
+
+Ans: [root@hostname01 ~]# grep -E ".*-01-" pune_emp.lst
+1001|John Doe        |Manager   |HR        |1990-01-15|50000
+
+13. List details of all employees other than those of HR and Admin in file F1.
+Ans:[root@hostname01 ~]# grep -v -E "HR|Admin" pune_emp.lst ttc_emp.lst mumbai_emp.lst > F1
+[root@hostname01 ~]# cat F1
+pune_emp.lst:1002|Alice Smith      |Engineer  |IT        |1988-05-22|55000
+pune_emp.lst:1003|Raj Patel        |Technician|Sales     |1992-03-12|35000
+pune_emp.lst:1005|Manu Sharma     |Engineer  |H/W        |1981-06-19|67000
+pune_emp.lst:1006|Seema Sharma     |Engineer  |AI        |1983-05-18|87000
+pune_emp.lst:1007|Seema saxena     |Engineer  |DS        |1982-05-15|2999
+ttc_emp.lst:2002|Nina Verma       |Engineer  |IT        |1990-08-21|56000
+ttc_emp.lst:2003|Vikram Shah      |Technician|Sales     |1993-01-30|36000
+mumbai_emp.lst:3002|Priya Sharma     |Engineer  |IT        |1991-07-14|57000
+mumbai_emp.lst:3003|Sameer Khan      |Technician|Sales     |1994-10-09|37000
+mumbai_emp.lst:3002|Manu Sharma     |Engineer  |AI        |1981-06-19|67000
+mumbai_emp.lst:3006|Seema saxena     |Engineer  |DS        |1983-05-18|87000
+mumbai_emp.lst:3006|Reema saksena     |Engineer  |ML        |1988-09-14|77000
+
+
+14. Locate for all Dwivedi, Trivedi, Chaturvedi in Pune file.
+Ans:[root@hostname01 ~]# grep -i "Dwivedi\|Trivedi\|Chaturvedi" pune_emp.lst
+
+15. Obtain a list of people in HR, Admin and Recr. depts. sorted in reverse order
+
+of the dept.
+Ans:[root@hostname01 ~]# awk -F'|' '$4 == "HR" || $4 == "Admin" || $4 == "Recr." {print $2, $4}' pune_emp.lst ttc_emp.lst mumbai_emp.lst | sort -t'|' -k2,2r
+
+25: Write a command sequence that prints out date information in this order: time,
+
+day of week, day number, month, year :
+
+13:44:42 IST Sun 16 Sept 1994
+Ans: [root@hostname01 ~]# date "+%T, %A %d %B %Y"
+17:58:04, Friday 31 January 2025
+
+26: Write a command sequence that prints the names of the files in the current
+
+directory in the descending order of number of links.
+Ans:[root@hostname01 ~]# ls -l | sort -k2,2nr | awk '{print $9}'
+
+Desktop
+Documents
+Downloads
+Music
+Pictures
+Public
+Templates
+Videos
+anaconda-ks.cfg
+cfile1
+cfile2
+friends
+sorted_friends
+dir
+perms
+files
+sizes
+purpose.sh
+greater.sh
+emp.lst
+fixed_file
+srtf
+nonhr
+ttc_emp.lst
+use_command.sh
+pune_emp.lst
+mumbai_emp.lst
+desig.lst
+F1
+dept.lst
+funct.sh
+array.sh
+[root@hostname01 ~]# 
+
+
+
+27: Write a command sequence that prints only names of files in current working
+
+directory in alphabetical order.
+Ans: [root@hostname01 ~]# ls -1 | sort
+anaconda-ks.cfg
+array.sh
+cfile1
+cfile2
+dept.lst
+desig.lst
+Desktop
+dir
+Documents
+Downloads
+emp.lst
+F1
+files
+fixed_file
+friends
+funct.sh
+greater.sh
+mumbai_emp.lst
+Music
+nonhr
+perms
+Pictures
+Public
+pune_emp.lst
+purpose.sh
+sizes
+sorted_friends
+srtf
+Templates
+ttc_emp.lst
+use_command.sh
+Videos
+
+
+
+28: Write a command sequence to print names and sizes of all the files in current
+
+working directory in order of size.
+
+Ans: [root@hostname01 ~]# ls -l | sort -k5,5n | awk '{print $9, $5}'
+ 
+Desktop 6
+Documents 6
+Downloads 6
+Music 6
+Pictures 6
+Public 6
+Templates 6
+Videos 6
+files 17
+sizes 17
+use_command.sh 31
+desig.lst 46
+
+
+
+29: Determine the latest file updated by the user.
+Ans [root@hostname01 ~]# ls -lt | head -n 1
+total 96
