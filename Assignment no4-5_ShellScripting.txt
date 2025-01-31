@@ -1,0 +1,352 @@
+Name:Unnati Katore
+Batch 5
+Assignmnet No 4-5
+
+1 Write a shell script which will generate the O/P as follows
+
+
+*
+
+**
+
+***
+
+****
+bash file:
+
+
+Output:  [admin@hostname01 ~]$ nano star_pattern.sh
+[admin@hostname01 ~]$ chmod +x star_pattern.sh
+[admin@hostname01 ~]$ ./star_pattern.sh
+*
+**
+***
+****
+Bash code:
+or i in {1..4}
+do for((j=1;j<=i;j++))
+do echo -n "*"
+done
+ echo
+ done
+
+
+2 Accept the first name, middle name, and last name of a person in variables fname, mname and lname respectively. Greet the person (take his full name) using appropriate message.
+Output:
+[admin@hostname01 ~]$ nano greet_person.sh
+[admin@hostname01 ~]$ chmod +x greet_person.sh
+[admin@hostname01 ~]$ ./greet_person.sh
+Enter your first name
+Unnati
+Enter your middle name
+Deepak
+Enter your last name
+Katore
+Hello,Unnati Deepak Katore! Welcom!
+
+bash code:
+echo "Enter your first name"
+read fname
+
+echo "Enter your middle name"
+read mname
+
+echo "Enter your last name"
+read lname
+
+echo "Hello,$fname $mname $lname! Welcom!"
+
+3 Display the name of files in the current directory along with the names of files with maximum & minimum size. The file size is considered in bytes.
+Output:
+[admin@hostname01 ~]$ nano file_size_info.sh
+[admin@hostname01 ~]$ chmod +x file_size_info.sh
+[admin@hostname01 ~]$ ./file_size_info.sh
+file in the current directory along with their sizes
+------------------------------------------------
+ 
+errorlog.txt 52
+file_size_info.sh 641
+friends 174
+greet_person.sh 166
+lsdoc 7.9K
+new 174
+newfriends 174
+star_pattern.sh 71
+users 503
+./file_size_info.sh: line 8: min_file: command not found
+
+file with maximum size: student_record.sh 1821
+
+file with minimum size: star_pattern.sh 71
+
+4 Write a script which when executed checks out whether it is a working day or not?
+
+(Note: Working day Mon-Fri)
+Output: #!/bin/bash
+
+# Get the current day of the week (1-7, with 1 being Monday)
+day_of_week=$(date +%u)
+
+# Check if the day is a working day (Monday to Friday)
+if [ "$day_of_week" -ge 1 ] && [ "$day_of_week" -le 5 ]; then
+    echo "It is a working day (Monday to Friday)."
+else
+    echo "It is not a working day (Saturday or Sunday)."
+fi
+
+Ans:
+[root@hostname01 ~]# vim work_day.sh
+[root@hostname01 ~]# chmod +x work_day.sh
+[root@hostname01 ~]# ./work_day.sh
+It is not a working day (Saturday or Sunday).
+
+
+5 Write a script that accepts a member into HP health club, if the weight of the person is withing the range of 30-250 Kgs.
+Output: [admin@hostname01 ~]$ nano health_club.sh
+[admin@hostname01 ~]$ chmod +x health_club.sh
+[admin@hostname01 ~]$ ./health_club.sh
+Enter your weight in kilograms (kg)
+56
+Soory ,your weight is outside the acceptable range for HP health club menebership
+
+Bashcode:
+echo "Enter your weight in kilograms (kg)"
+read weight
+
+if ["$weight" -ge 30 ] && ["$weight" -le 250]; then
+  echo "Congratulation! you have been accepted into the HP health club"
+
+ else
+echo "Soory ,your weight is outside the acceptable range for HP health club menebership"
+
+fi
+
+6 Write a shell script that greets the user with an appropriate message depending on the system time.
+Output:
+COde: #!/bin/bash
+
+)
+current_hour=$(date +%H)
+if [ $current_hour -ge 5 ] && [ $current_hour -lt 12 ]; then
+    echo "Good Morning, $(whoami)!"
+elif [ $current_hour -ge 12 ] && [ $current_hour -lt 17 ]; then
+    echo "Good Afternoon, $(whoami)!"
+elif [ $current_hour -ge 17 ] && [ $current_hour -lt 21 ]; then
+    echo "Good Evening, $(whoami)!"
+else
+    echo "Good Night, $(whoami)!"
+fi
+
+ANs:
+[root@hostname01 ~]# vim greet.sh
+[root@hostname01 ~]# chmod +x greet.sh
+[root@hostname01 ~]# ./greet.sh
+Good Night, root!
+
+7 A data file file has some student records including rollno, names and subject marks. The fields are separated by a “:”. Write a shell script that accepts roll number from the user, searches it in the file and if the roll number is present - allows the user to modify name and marks in 3 subjects. If the roll number is not present, display a message “Roll No Not Found”. Allow the user to modify one record at a time.
+Output:
+COde: 
+  #!/bin/bash
+
+# Prompt for RollNo
+echo "Enter RollNo to modify:"
+read rollno
+
+# Define the file containing student records
+file="file"
+
+# Check if the record with the given rollno exists
+record=$(grep "^$rollno:" "$file")
+
+if [ -z "$record" ]; then
+    echo "Roll No Not Found"
+else
+    
+    echo "Existing Record: $record"
+    
+    echo "Enter new name:"
+    read name
+    echo "Enter new Marks for Subject 1:"
+    read marks1
+    echo "Enter new Marks for Subject 2:"
+    read marks2
+    echo "Enter new Marks for Subject 3:"
+    read marks3
+    
+    
+    new_record="$rollno:$name:$marks1:$marks2:$marks3"
+    
+    sed -i "s/^$rollno:.*/$new_record/" "$file"
+    
+    # Display the updated record
+    echo "Updated Record: $new_record"
+fi
+
+   [root@hostname01 ~]# vim modify_std.sh
+[root@hostname01 ~]# chmod +x modify_std.sh
+[root@hostname01 ~]# ./modify_std.sh
+Enter RollNo to modify:
+12
+Roll No Not Found
+
+8 Modify program 7 to accept the RollNo from the command line.
+Code: 
+  #!/bin/bash
+
+# Check if RollNo is passed as a command line argument
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <RollNo>"
+    exit 1
+fi
+
+# Get RollNo from the command line argument
+rollno=$1
+
+# Define the file containing student records
+file="file"
+
+# Check if the record with the given rollno exists
+record=$(grep "^$rollno:" "$file")
+
+if [ -z "$record" ]; then
+    # If record not found, display message
+    echo "Roll No Not Found"
+else
+    # If record found, display existing record
+    echo "Existing Record: $record"
+    
+    # Prompt for new name and marks for 3 subjects
+    echo "Enter new name:"
+    read name
+    echo "Enter new Marks for Subject 1:"
+    read marks1
+    echo "Enter new Marks for Subject 2:"
+    read marks2
+    echo "Enter new Marks for Subject 3:"
+    read marks3
+    
+    # Create the updated record
+    new_record="$rollno:$name:$marks1:$marks2:$marks3"
+    
+    # Modify the record in the file by replacing the old one
+    sed -i "s/^$rollno:.*/$new_record/" "$file"
+    
+    # Display the updated record
+    echo "Updated Record: $new_record"
+fi
+
+Ans:./modify_std_cd.sh 12345
+
+
+9 Modify the program 7 to accept the RollNo and display the record and ask for delete confirmation. Once confirmed delete the record and update the data file.
+ Code:
+  #!/bin/bash
+
+# Check if RollNo is passed as a command line argument
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <RollNo>"
+    exit 1
+fi
+
+# Get RollNo from the command line argument
+rollno=$1
+
+# Define the file containing student records
+file="student_data.txt"
+
+# Check if the record with the given rollno exists
+record=$(grep "^$rollno:" "$file")
+
+if [ -z "$record" ]; then
+    # If record not found, display message
+    echo "Roll No Not Found"
+else
+    # If record found, display the record
+    echo "Record Found: $record"
+    
+    # Ask for confirmation to delete the record
+    echo "Do you want to delete this record? (y/n)"
+    read confirm
+
+    if [ "$confirm" == "y" ]; then
+        # Delete the record from the file using sed
+        sed -i "/^$rollno:/d" "$file"
+        echo "Record deleted successfully."
+    else
+        echo "Record deletion canceled."
+    fi
+fi
+
+
+
+Ans:
+root@hostname01 ~]# vim delete_student.sh
+[root@hostname01 ~]# chmod +x delete_student.sh
+[root@hostname01 ~]# vim student_data.txt
+[root@hostname01 ~]# ./delete_student.sh 12345
+Record Found: 12345:John Doe:85:92:88
+Do you want to delete this record? (y/n)
+y
+Record deleted successfully.
+
+10 Write a script that takes a command line argument and reports on its file type (regular file, directory file, etc.). For more than one argument generate error message.
+Code:#!/bin/bash
+
+# Check if exactly one argument is passed
+if [ $# -ne 1 ]; then
+    echo "Error: Please provide exactly one argument."
+    echo "Usage: $0 <file_name>"
+    exit 1
+fi
+
+# Get the file or directory name from the argument
+file=$1
+
+# Check the type of the file or directory
+if [ -f "$file" ]; then
+    echo "$file is a regular file."
+elif [ -d "$file" ]; then
+    echo "$file is a directory."
+elif [ -L "$file" ]; then
+    echo "$file is a symbolic link."
+else
+    echo "$file is of an unknown file type."
+fi
+
+
+Ans: [root@hostname01 ~]# vim check_file_type.sh
+[root@hostname01 ~]# chmod +x check_file_type.sh
+[root@hostname01 ~]# vim example.txt
+[root@hostname01 ~]# ./check_file_type.sh example.txt
+example.txt is a regular file.
+[root@hostname01 ~]# 
+
+
+11.Add some student records in the “student” file manually. The fields to be considered are “RollNo”, “Name”, “Marks_Hindi”, “Marks_Maths”, “Marks_Physics”. Write a script which does the following
+
+a If the roll number already exists, then store the record and the following message “roll number exists” in a log file “log1”.
+
+b If the marks in the subjects is not in the range of 1 – 99 then store such a record followed by a message “marks out of range” in “log1”
+
+c If the data is valid, the calculate total, percentage, grade and display on the terminal        
+
+Output: 
+[root@hostname01 ~]# ./student_record.sh
+Enter RollNo:
+26
+Enter Name:
+Unnati Katore
+Enter Marks in Hindi:
+92
+Enter Marks in Maths:
+99
+Enter Marks in Physics:
+89
+Student Record: 26 Unnati Katore
+Total Marks: 280
+Percentage: 93.33
+Grade: A
+
+
+
+
