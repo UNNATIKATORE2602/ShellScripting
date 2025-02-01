@@ -1,0 +1,781 @@
+Name:Unnati Katore
+Batch 5
+Assignmnet No 4-5
+
+
+Pattern Matching using egrep
+----------------------------
+Create a file student.dat with following data
+
+name surname marks grade
+rameshchandra mane 79 A+
+suresh bahrti 88 A++
+rajat bhosle 25 C
+suraj pancholi 65 A
+manoj sharma 55 B
+rahul varma 87 A++
+manoj pandey 56 B
+suraj rajguru 45 B
+  
+[root@hostname01 ~]# vim student.dat
+[root@hostname01 ~]# chmod +x student.dat
+[root@hostname01 ~]# ./student.dat
+
+1. Display all names starting with s
+Ans:[root@hostname01 ~]# egrep '^s' student.dat
+suresh bahrti 88 A++
+suraj pancholi 65 A
+suraj rajguru 45 B
+
+2. Display whose name ending with e or i
+Ans:[root@hostname01 ~]# egrep '[ie]$' student.dat
+name surname marks grade
+
+3. Display who got 65 marks
+Ans:[root@hostname01 ~]# egrep '[ie]$' student.dat
+name surname marks grade
+
+4. Display data of records whose surname is Sharma is varma
+Ans:[root@hostname01 ~]# egrep 'sharma|varma' student.dat
+manoj sharma 55 B
+rahul varma 87 A++
+
+5. Display who got grade A only
+Ans:[root@hostname01 ~]# egrep '\bA\b' student.dat
+rameshchandra mane 79 A+
+suresh bahrti 88 A++
+suraj pancholi 65 A
+rahul varma 87 A++
+
+6. Display whose 3rd charcter of name is r
+Ans:[root@hostname01 ~]# egrep '^..r' student.dat
+suresh bahrti 88 A++
+suraj pancholi 65 A
+suraj rajguru 45 B
+
+
+7. Display whose second character is a or r or t
+Ans:
+[root@hostname01 ~]# egrep '^.[art]' student.dat
+name surname marks grade
+rameshchandra mane 79 A+
+rajat bhosle 25 C
+manoj sharma 55 B
+rahul varma 87 A++
+manoj pandey 56 B
+
+8. Display names whose length is exactly 5 character
+Ans:[root@hostname01 ~]# egrep '^.[art]' student.dat
+name surname marks grade
+rameshchandra mane 79 A+
+rajat bhosle 25 C
+manoj sharma 55 B
+rahul varma 87 A++
+manoj pandey 56 B
+
+9. Display names whose length is more than 6 character
+Ans:[root@hostname01 ~]# egrep '^.{7,} ' student.dat
+name surname marks grade
+rameshchandra mane 79 A+
+suresh bahrti 88 A++
+rajat bhosle 25 C
+suraj pancholi 65 A
+manoj sharma 55 B
+rahul varma 87 A++
+manoj pandey 56 B
+suraj rajguru 45 B
+
+10. Display name whose marks are ending with 6
+Ans:[root@hostname01 ~]# egrep '[0-9]6 ' student.dat
+manoj pandey 56 B
+
+11. Display grade with A+ only
+Ans: [root@hostname01 ~]# grep '\bA\+\b' student.dat
+rameshchandra mane 79 A+
+
+
+
+
+Noninteractive Editing using sed
+---------------------------------
+
+1. Copy the file  /etc/syslog.conf to the current directory as syslog.conf. Insert blank line after every line in the file syslog.conf.
+Ans: cp /etc/syslog.conf syslog.conf
+     sed -i 'G' syslog.conf
+
+2. Remove the blank lines from the file syslog.conf
+Ans: sed -i '/^$/d' syslog.conf
+
+3. Print the first 3 lines of the file syslog.conf
+Ans:head -n 3 syslog.conf
+
+4. Print lines from 3rd to 5th from the file /etc/syslog.conf
+Ans: sed -n '3,5p' /etc/syslog.conf
+
+5. Insert some spaces in the beginning(leading spaces) & end of each line(trailing spaces) manually using vi editor
+Ans:vi syslog.conf
+
+6. Through sed command remove the leading spaces & trailing spaces in the above file
+Ans: sed -i 's/^[ \t]*//;s/[ \t]*$//' syslog.conf
+
+7. Substitute kern with kernel in the file syslog.conf & then substitute back to kern.
+Ans:sed -i 's/\bkern\b/kernel/g' syslog.conf
+    sed -i 's/\bkernel\b/kern/g' syslog.conf
+
+8. Search for the lines containing the word kern & write those lines into a file kern.conf
+Ans:grep 'kern' syslog.conf > kern.conf
+
+9. Print all the lines of the file syslog.conf except the 3rd line.
+Ans:sed '3d' syslog.conf
+
+10. Delete each line that contains the pattern kern
+Ans:sed -i '/kern/d' syslog.conf
+
+
+Create a file “Employee.dat” with text as follows
+
+James 76382 ECAP Chennai
+John 34228 GRIT Hyderabad
+Peter 22321 GE Bangalore
+Albert 32342 GRIT Pune
+Mathew 23222 ECAP Mumbai
+Richard 23232 ACS Pune
+
+1. Write a sed command to print only the lines starting at line 2 and ending with the letters “Pune”
+Ans:[root@hostname01 ~]# sed -n '2,/Pune/p' Employee.dat
+John 34228 GRIT Hyderabad
+Peter 22321 GE Bangalore
+Albert 32342 GRIT Pune
+
+2. Write a sed command that will display the top 5 lines from the file
+Ans:[root@hostname01 ~]# sed -n '1,5p' Employee.dat
+James 76382 ECAP Chennai
+John 34228 GRIT Hyderabad
+Peter 22321 GE Bangalore
+Albert 32342 GRIT Pune
+Mathew 23222 ECAP Mumbai
+
+3. Write a sed command that will substitute the word “Chennai” for "Pune" used in all instance of the word
+Ans:[root@hostname01 ~]# sed 's/Chennai/Pune/g' Employee.dat
+James 76382 ECAP Pune
+John 34228 GRIT Hyderabad
+Peter 22321 GE Bangalore
+Albert 32342 GRIT Pune
+Mathew 23222 ECAP Mumbai
+Richard 23232 ACS Pune
+
+4. Write a sed command that will replace occurrence of the character e with the string UNIX in all lines. (Use –e option)
+Ans:[root@hostname01 ~]# sed -e 's/e/UNIX/g' Employee.dat
+JamUNIXs 76382 ECAP ChUNIXnnai
+John 34228 GRIT HydUNIXrabad
+PUNIXtUNIXr 22321 GE BangalorUNIX
+AlbUNIXrt 32342 GRIT PunUNIX
+MathUNIXw 23222 ECAP Mumbai
+Richard 23232 ACS PunUNIX
+
+5. Write a sed command to delete blank lines
+Ans:[root@hostname01 ~]# sed '/^$/d' Employee.dat
+James 76382 ECAP Chennai
+John 34228 GRIT Hyderabad
+Peter 22321 GE Bangalore
+Albert 32342 GRIT Pune
+Mathew 23222 ECAP Mumbai
+Richard 23232 ACS Pune
+
+6. Write a sed command to delete lines from 3 to 5
+Ans:[root@hostname01 ~]# sed '3,5d' Employee.dat
+James 76382 ECAP Chennai
+John 34228 GRIT Hyderabad
+Richard 23232 ACS Pune
+
+7. Create a new file “ECAP.dat which has only the lines that contain the word
+“ECAP” from Employee.dat
+Ans:[root@hostname01 ~]# sed '/ECAP/' Employee.dat > ECAP.dat
+James 76382 ECAP Chennai
+Mathew 23222 ECAP Mumbai
+
+
+
+Report Generation using awk
+---------------------------
+
+1. Consider the results are stored in following format:
+
+EmpID Name Subject Marks(/50)
+E001 Nilesh Unix 30
+E002 Nilesh DSA 20
+Like these you have 10 records ( 5 of DSA and 5 of Unix)
+Ans:[root@hostname01 ~]# echo -e "E001 Nilesh Unix 30\nE002 Nilesh DSA 20\nE003 Ravi Unix 45\nE004 Ravi DSA 40\nE005 Arvind Unix 38\nE006 Arvind DSA 25\nE007 Vikash Unix 32\nE008 Vikash DSA 28\nE009 Aman Unix 41\nE010 Aman DSA 35" > results.txt
+[root@hostname01 ~]# cat results.txt
+E001 Nilesh Unix 30
+E002 Nilesh DSA 20
+E003 Ravi Unix 45
+E004 Ravi DSA 40
+E005 Arvind Unix 38
+E006 Arvind DSA 25
+E007 Vikash Unix 32
+E008 Vikash DSA 28
+E009 Aman Unix 41
+E010 Aman DSA 35
+
+
+Calculate the avg score secured in Unix and DSA and the first 2 topers in Unix and DSA each.
+Ans:[root@hostname01 ~]# awk '{sum[$3] += $4; count[$3]++} END {for (subj in sum) print "Average for " subj ": " sum[subj]/count[subj]}' results.txt
+Average for Unix: 37.2
+Average for DSA: 29.6
+[root@hostname01 ~]# awk '{print $4, $1, $2, $3}' results.txt | sort -k1,1nr -k2,2 | awk 'BEGIN {print "Top 2 scorers in each subject"} {if ($4 == "Unix" && count["Unix"] < 2) {print $2, $3, $1, $4; count["Unix"]++} else if ($4 == "DSA" && count["DSA"] < 2) {print $2, $3, $1, $4; count["DSA"]++}}'
+Top 2 scorers in each subject
+E003 Ravi 45 Unix
+E009 Aman 41 Unix
+E004 Ravi 40 DSA
+E010 Aman 35 DSA
+
+
+2. Write a script to get the report of the users logged on to the System in
+the following formats. (Records should be sorted on logging time.)
+Header must include company name and Date
+Records in the format
+Username Logged-in-time Terminal
+Tailor should include total number of the users logged in.
+
+Code: 
+  #!/bin/bash
+
+company_name="Your Company Name"
+
+current_date=$(date '+%Y-%m-%d')
+
+echo "Company: $company_name"
+echo "Date: $current_date"
+echo "----------------------------------------------"
+echo "Username    Logged-in-time    Terminal"
+echo "----------------------------------------------"
+who | awk '{print $1, $3, $2}' | sort -k3,3 -k2,2 | while read username month day time terminal; do
+    # Format the output to match the required format
+    echo "$username  $month $day $time  $terminal"
+done
+total_users=$(who | wc -l)
+echo "----------------------------------------------"
+echo "Total number of users logged in: $total_users"
+
+ Ans:[root@hostname01 ~]# vim user_report.sh
+[root@hostname01 ~]# chmod +x user_report.sh
+[root@hostname01 ~]# ./user_report.sh
+Company: Your Company Name
+Date: 2025-02-01
+----------------------------------------------
+Username    Logged-in-time    Terminal
+----------------------------------------------
+admin  2025-01-27 seat0   
+admin  2025-01-27 tty2   
+----------------------------------------------
+Total number of users logged in: 2
+
+3. Consider a text file containing the records (colon separated fields) in the format:
+EmpName:EmpId:Subject:ObtMarks:TotMarks:Result
+Write a script to get the result of “UNIX” Subject in the format (Considering the data file has TotMarks=50 for UNIX
+EmpName:ObtMark:MarksOutof35
+The header of the report must contain total marks and the tailor must
+specify the percentage result for that subject.
+Also generate another summary result containing total number of
+participants appeared, total number of participants passed, and Name of
+the participants ranked Ist IInd, IIIrd with their total score.
+Code: #!/bin/bash
+
+# Define the total marks for UNIX subject and the marks out of 35
+total_marks_unix=50
+marks_out_of_35=35
+passed_count=0
+total_participants=0
+
+# Arrays to store data for participants (name, obtained marks, and marks out of 35)
+declare -a names
+declare -a obtained_marks
+declare -a marks_out_of_35_values
+declare -a percentages
+declare -a results
+
+# Read the input file (assuming the file path is passed as an argument)
+file_path=$1
+
+# Check if the file exists
+if [[ ! -f "$file_path" ]]; then
+    echo "File not found!"
+    exit 1
+fi
+
+# Process the file to extract UNIX subject records
+while IFS=':' read -r emp_name emp_id subject obt_marks tot_marks result; do
+    if [[ "$subject" == "UNIX" && "$tot_marks" -eq 50 ]]; then
+        total_participants=$((total_participants + 1))
+        obtained_marks_val=$((obt_marks))
+        percentage=$(echo "scale=2; ($obtained_marks_val / $total_marks_unix) * 100" | bc)
+        marks_out_of_35_val=$(echo "scale=0; ($obtained_marks_val / $total_marks_unix) * $marks_out_of_35" | bc)
+        
+        # Store the extracted data
+        names+=("$emp_name")
+        obtained_marks+=("$obtained_marks_val")
+        marks_out_of_35_values+=("$marks_out_of_35_val")
+        percentages+=("$percentage")
+        results+=("$result")
+
+        if [[ "$result" == "PASS" || "$result" == "pass" ]]; then
+            passed_count=$((passed_count + 1))
+        fi
+    fi
+done < "$file_path"
+
+# Check if there are any UNIX participants
+if [[ $total_participants -eq 0 ]]; then
+    echo "No participants appeared for UNIX."
+    exit 0
+fi
+
+# Generate the UNIX report
+echo "Report for UNIX subject (Total Marks = $total_marks_unix, Percentage Calculation: Out of 35):"
+echo ""
+echo "EmpName:ObtMarks:MarksOutOf35"
+for ((i=0; i<$total_participants; i++)); do
+    echo "${names[$i]}:${obtained_marks[$i]}:${marks_out_of_35_values[$i]}"
+done
+
+# Generate the summary report
+echo ""
+echo "Summary Report:"
+echo "Total Participants Appeared: $total_participants"
+echo "Total Participants Passed: $passed_count"
+
+# Get the rankings based on marks (sort by marks out of 35 in descending order)
+ranked_participants=()
+for ((i=0; i<$total_participants; i++)); do
+    ranked_participants+=("${marks_out_of_35_values[$i]} ${names[$i]}")
+done
+
+# Sort participants by marks (descending)
+IFS=$'\n' sorted_participants=($(sort -nr <<<"${ranked_participants[*]}"))
+unset IFS
+
+# Display rankings (1st, 2nd, 3rd)
+echo ""
+echo "Rankings:"
+if [[ ${#sorted_participants[@]} -ge 3 ]]; then
+    echo "1st: $(echo ${sorted_participants[0]} | cut -d ' ' -f2) with $(echo ${sorted_participants[0]} | cut -d ' ' -f1) marks"
+    echo "2nd: $(echo ${sorted_participants[1]} | cut -d ' ' -f2) with $(echo ${sorted_participants[1]} | cut -d ' ' -f1) marks"
+    echo "3rd: $(echo ${sorted_participants[2]} | cut -d ' ' -f2) with $(echo ${sorted_participants[2]} | cut -d ' ' -f1) marks"
+elif [[ ${#sorted_participants[@]} -eq 2 ]]; then
+    echo "1st: $(echo ${sorted_participants[0]} | cut -d ' ' -f2) with $(echo ${sorted_participants[0]} | cut -d ' ' -f1) marks"
+    echo "2nd: $(echo ${sorted_participants[1]} | cut -d ' ' -f2) with $(echo ${sorted_participants[1]} | cut -d ' ' -f1) marks"
+elif [[ ${#sorted_participants[@]} -eq 1 ]]; then
+    echo "1st: $(echo ${sorted_participants[0]} | cut -d ' ' -f2) with $(echo ${sorted_participants[0]} | cut -d ' ' -f1) marks"
+fi
+ 
+Ans: [root@hostname01 ~]# vim records.txt 
+[root@hostname01 ~]# vim unix_shell.sh
+[root@hostname01 ~]# chmod +x unix_shell.sh
+[root@hostname01 ~]# ./unix_shell.sh records.txt
+Report for UNIX subject (Total Marks = 50, Percentage Calculation: Out of 35):
+
+EmpName:ObtMarks:MarksOutOf35
+James:30:0
+Peter:45:0
+Mathew:50:35
+
+Summary Report:
+Total Participants Appeared: 3
+Total Participants Passed: 3
+
+Rankings:
+1st: Mathew with 35 marks
+2nd: Peter with 0 marks
+3rd: James with 0 marks
+
+
+4. Consider the Arizona roaster as an input data file for this exercise. Using
+any combination of the text-processing utilities listed below, write a oneline shell command that performs each of the following tasks
+(a) reports the number of players on the roster
+Ans:root@hostname01 ~]# vim roster.txt
+[root@hostname01 ~]# chmod +x roster.txt
+[root@hostname01 ~]# tail -n +2 roster.txt | wc -l
+12
+
+(b) displays the roster in order by jersey number
+Ans:[root@hostname01 ~]# sort -t '|' -k1,1 roster.txt
+
+11 | Fitzgerald,Larry |WR6'04" |229| 08/31/1983 |10 |Pittsburgh
+20 | Anderson, Damien |RB 5'10" | 212 | 07/17/1979 | 3 |Northwestern
+30 | Ayanbadejo, Oba |FB 6'02" | 235 | 03/05/1975 | 5 |San Diego
+35 | Carter,Dyshod |DB5'10" |197 | 06/18/1978 |2 | Kansas State
+52 | Fisher,Levar |OLB6'01" |235 | 07/02/1979 |3| NorthCarolina
+63 |Garcia,Frank |G6'02" | 302| 01/28/1972|10|Washington
+64 |Grace,Steven |C6'03" |295| 02/13/1979 | 3|Arizona
+81 | Boldin,Anquan |WR6'01" |215 | 10/03/1980 |2 | FloridaState
+84 |Hamilton,Lawrence |WR6'03" |205 |08/31/1980 |2|StephenF.Austin
+91 | Bryant,Wendell |DT6'04" |303| 09/12/1980 | 3 | Wisconsin
+92 | Berry,Bert |DE6'03" | 250| 08/15/1975 | 7 |NotreDame
+JersyNo|Name,surname |linebackers|Weight | Date | Experience| Country
+
+(c) displays the roster in alphabetical order by surname
+Ans:[root@hostname01 ~]# sort -t ',' -k2,2 roster.txt
+
+81 | Boldin,Anquan |WR6'01" |215 | 10/03/1980 |2 | FloridaState
+92 | Berry,Bert |DE6'03" | 250| 08/15/1975 | 7 |NotreDame
+20 | Anderson, Damien |RB 5'10" | 212 | 07/17/1979 | 3 |Northwestern
+35 | Carter,Dyshod |DB5'10" |197 | 06/18/1978 |2 | Kansas State
+63 |Garcia,Frank |G6'02" | 302| 01/28/1972|10|Washington
+11 | Fitzgerald,Larry |WR6'04" |229| 08/31/1983 |10 |Pittsburgh
+84 |Hamilton,Lawrence |WR6'03" |205 |08/31/1980 |2|StephenF.Austin
+52 | Fisher,Levar |OLB6'01" |235 | 07/02/1979 |3| NorthCarolina
+30 | Ayanbadejo, Oba |FB 6'02" | 235 | 03/05/1975 | 5 |San Diego
+64 |Grace,Steven |C6'03" |295| 02/13/1979 | 3|Arizona
+JersyNo|Name,surname |linebackers|Weight | Date | Experience| Country
+91 | Bryant,Wendell |DT6'04" |303| 09/12/1980 | 3 | Wisconsin
+
+(d) displays the heaviest five players
+Ans:[root@hostname01 ~]# sort -t '|' -k4,4n -r roster.txt | head -n 5
+JersyNo|Name,surname |linebackers|Weight | Date | Experience| Country
+
+35 | Carter,Dyshod |DB5'10" |197 | 06/18/1978 |2 | Kansas State
+84 |Hamilton,Lawrence |WR6'03" |205 |08/31/1980 |2|StephenF.Austin
+20 | Anderson, Damien |RB 5'10" | 212 | 07/17/1979 | 3 |Northwestern
+
+(e) displays all players who attended Wisconsin
+Ans:[root@hostname01 ~]# grep 'Wisconsin' roster.txt
+91 | Bryant,Wendell |DT6'04" |303| 09/12/1980 | 3 | Wisconsin
+
+
+
+5. Create an awk program which will displays the total number of users in the system.
+Ans:[root@hostname01 ~]# nano count_users.sh
+[root@hostname01 ~]# chmod +x count_users.sh
+[root@hostname01 ~]# ./count_users.sh
+39
+
+6. Create an awk program which counts and at the end displays the following data: 
+	No. of Bash Shell users:
+	No. of Bourne Shell Users:
+
+Ans: [root@hostname01 ~]# awk -F: '{if ($7 == "/bin/bash") bash++; if ($7 == "/bin/sh") bourne++} END {print "No. of Bash Shell users:", bash; print "No. of Bourne Shell Users:", bourne}' /etc/passwd
+No. of Bash Shell users: 3
+No. of Bourne Shell Users: 
+
+7. Create an awk program which displays only user name and the corresponding user id as in the following Report Format :
+	User Name	User ID
+	root		0
+	daemon		1
+	---------------------
+	Total Number of users :
+
+
+Ans: [root@hostname01 ~]# awk -F: '{print $1 "\t" $3} END {print "---------------------"; print "Total Number of users:", NR}' /etc/passwd
+root	0
+bin	1
+daemon	2
+adm	3
+lp	4
+sync	5
+shutdown	6
+halt	7
+mail	8
+operator	11
+games	12
+ftp	14
+nobody	65534
+systemd-coredump	999
+dbus	81
+polkitd	998
+avahi	70
+rtkit	172
+libstoragemgmt	997
+geoclue	996
+tss	59
+cockpit-ws	995
+colord	993
+sssd	992
+setroubleshoot	991
+pipewire	990
+flatpak	989
+clevis	988
+gdm	42
+gnome-initial-setup	987
+sshd	74
+chrony	986
+dnsmasq	985
+tcpdump	72
+systemd-oom	978
+admin	1000
+vinsys	1001
+apache	48
+postfix	89
+---------------------
+Total Number of users: 39
+[root@hostname01 ~]# 
+
+
+8. Create an awk program which prints the alternate lines like 2nd , 4th , 6th etc... from the file /etc/group.
+Ans:[root@hostname01 ~]# awk 'NR % 2 == 0' /etc/group
+bin:x:1:
+sys:x:3:
+tty:x:5:
+lp:x:7:
+kmem:x:9:
+cdrom:x:11:
+man:x:15:
+floppy:x:19:
+tape:x:33:
+ftp:x:50:
+audio:x:63:
+nobody:x:65534:
+utempter:x:35:
+kvm:x:36:
+systemd-journal:x:190:
+dbus:x:81:
+avahi:x:70:
+ssh_keys:x:994:
+libstoragemgmt:x:993:
+tss:x:59:clevis
+colord:x:989:
+setroubleshoot:x:987:
+flatpak:x:985:
+brlapi:x:983:
+gnome-initial-setup:x:982:
+chrony:x:981:
+dnsmasq:x:980:
+sgx:x:979:
+admin:x:1000:
+apache:x:48:
+postdrop:x:90:
+[root@hostname01 ~]# 
+9. Create an awk program which will display the file name and the size of the files in the current directory where the file size is more than 100 bytes
+Ans:[root@hostname01 ~]# ls -l | awk '$5 > 100 {print $9, $5}'
+: 759
+anaconda-ks.cfg 828
+array.sh 208
+cfile1 114
+cfile2 132
+check_file_type.sh 518
+count_shell_users.sh 187
+data_file 759
+delete_student.sh 878
+dir 165
+Employee.dat 147
+emp.lst 246
+example.txt 232
+F1 907
+file_size_info.sh 617
+fixed_file 246
+friends 158
+friends.bak 160
+funct.sh 157
+get_unix_shell.sh 252
+greater.sh 209
+greet.sh 464
+modify_std_cd.sh 1079
+modify_std.sh 966
+mumbai_emp.lst 434
+nonhr 247
+perms 165
+pune_emp.lst 432
+purpose.sh 206
+records.txt 135
+results.txt 187
+roster.txt 759
+search_student.sh 1388
+sorted_friends 158
+srtf 246
+student.dat 184
+student_record.sh 1821
+ttc_emp.lst 248
+unix_shell.sh 3385
+user_report.sh 887
+work_day.sh 333
+
+10. Using awk, print the user id, login shell & home directory of the user root.
+Ans:[root@hostname01 ~]# awk -F: '$1 == "root" {print $3, $7, $6}' /etc/passwd
+0 /bin/bash /root
+
+11. Using awk print the user id, name & login shell of the system users [ System users are those whose uid is less than 500 ]
+Ans:[root@hostname01 ~]# awk -F: '$3 < 500 {print $3, $1, $7}' /etc/passwd
+0 root /bin/bash
+1 bin /sbin/nologin
+2 daemon /sbin/nologin
+3 adm /sbin/nologin
+4 lp /sbin/nologin
+5 sync /bin/sync
+6 shutdown /sbin/shutdown
+7 halt /sbin/halt
+8 mail /sbin/nologin
+11 operator /sbin/nologin
+12 games /sbin/nologin
+14 ftp /sbin/nologin
+81 dbus /sbin/nologin
+70 avahi /sbin/nologin
+172 rtkit /sbin/nologin
+59 tss /sbin/nologin
+42 gdm /sbin/nologin
+74 sshd /sbin/nologin
+72 tcpdump /sbin/nologin
+48 apache /sbin/nologin
+89 postfix /sbin/nologin
+[root@hostname01 ~]# 
+
+
+12. Using awk print the file name, owner and size of all the files in the /etc directory
+Ans:[root@hostname01 ~]# ls -l /etc | awk '{print $9, $3, $5}'
+  
+accountsservice root 28
+adjtime root 16
+aliases root 1529
+aliases.db root 12288
+alsa root 65
+alternatives root 4096
+anacrontab root 541
+appstream.conf root 833
+asound.conf root 55
+at.deny root 1
+audit root 100
+authselect root 4096
+avahi root 71
+bash_completion.d root 124
+bashrc root 2658
+bindresvport.blacklist root 535
+binfmt.d root 6
+bluetooth root 23
+brlapi.key root 33
+brltty root 84
+brltty.conf root 28974
+centos-release root 24
+chromium root 36
+chrony.conf root 1371
+chrony.keys root 540
+cifs-utils root 26
+cni root 6
+cockpit root 42
+containers root 154
+cron.d root 21
+cron.daily root 6
+cron.deny root 0
+cron.hourly root 22
+cron.monthly root 6
+crontab root 451
+cron.weekly root 6
+crypto-policies root 81
+crypttab root 0
+csh.cshrc root 1401
+csh.login root 1112
+cups root 4096
+cupshelpers root 34
+dbus-1 root 78
+dconf root 31
+debuginfod root 27
+default root 33
+depmod.d root 40
+dhcp root 24
+DIR_COLORS root 4673
+DIR_COLORS.lightbgcolor root 4755
+dnf root 128
+dnsmasq.conf root 27839
+dnsmasq.d root 6
+dracut.conf root 117
+dracut.conf.d root 6
+egl root 37
+enscript.cfg root 4760
+environment root 0
+ethertypes root 1362
+exports root 0
+favicon.png root 56
+filesystems root 66
+firefox root 18
+firewalld root 149
+flatpak root 23
+fonts root 38
+foomatic root 28
+fprintd.conf root 20
+fstab root 655
+fuse.conf root 38
+fwupd root 64
+gcrypt root 6
+gdm root 107
+geoclue root 26
+glvnd root 26
+gnupg root 6
+GREP_COLORS root 94
+groff root 40
+group root 862
+group- root 855
+grub2.cfg root 22
+grub.d root 4096
+gshadow root 695
+gshadow- root 688
+gss root 20
+host.conf root 9
+hostname root 11
+hosts root 158
+hp root 24
+httpd root 105
+inittab root 490
+inputrc root 943
+iproute2 root 159
+iscsi root 52
+issue root 23
+issue.d root 27
+issue.net root 22
+kdump root 33
+kdump.conf root 8979
+kernel root 23
+keys root 17
+keyutils root 6
+krb5.conf root 880
+krb5.conf.d root 83
+ld.so.cache root 40399
+ld.so.conf root 28
+ld.so.conf.d root 39
+libaudit.conf root 191
+libblockdev root 20
+libibverbs.d root 4096
+libnl root 35
+libpaper.d root 6
+libreport root 70
+libssh root 62
+libuser.conf root 2391
+locale.conf root 19
+localtime root 34
+login.defs root 7779
+logrotate.conf root 496
+logrotate.d root 4096
+lsm root 43
+lvm root 115
+machine-id root 33
+machine-info root 59
+magic root 111
+mailcap root 272
+makedumpfile.conf.sample root 5122
+man_db.conf root 5235
+mcelog root 41
+microcode_ctl root 32
+mime.types root 67454
+mke2fs.conf root 1208
+modprobe.d root 54
+modules-load.d root 6
+motd root 0
+motd.d root 21
+mtab root 19
+multipath root 6
+Muttrc root 191872
+Muttrc.local root 32
+nanorc root 10373
+netconfig root 767
+NetworkManager root 134
+networks root 58
+nftables root 66
+nsswitch.conf root 29
+nsswitch.conf.bak root 2108
+nvme root 57
+openldap root 36
+opt root 20
+os-release root 21
+ostree root 23
+PackageKit root 76
+pam.d root 4096
+papersize root 68
+passwd root 2158
+passwd- root 2108
